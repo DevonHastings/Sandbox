@@ -9,6 +9,20 @@ def average(data):
     '''
     return sum(data)/len(data)
 
+def local_avg(data):
+    '''
+    Calculates the moving average of calendar data
+    where the avg is of +- 3 days
+    :param data: Calendar data stored in a list.
+    :return: A list containing the weekly moving average.
+    '''
+    # We fill the list with 6 days of 'null' values
+    moving_average = [float('nan') for i in range(3)]
+    for i in range(3, len(data)-3):
+        week = average(data[i-3:i+3])
+        moving_average.append(week)
+    return moving_average
+
 def seven_day_average(data):
     '''
     Calculates the moving average of calendar data.
@@ -35,6 +49,7 @@ all_days = September + October + November
 # Graphing the information
 plt.plot(all_days, 'b', label='Daily Rating')
 plt.plot(seven_day_average(all_days), 'r', label='Weekly Average')
+plt.plot(local_avg(all_days), 'y', label = "local weekly avg")
 plt.plot(check_boxes, 'g', label='Checks')
 
 plt.ylabel('Rating')
